@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Config</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-rendering: optimizeLegibility;
+    }
+    
+    body {
+        font-size: 12px;
+        background: rgb(12, 184, 236);
+        height: 100vh;
+        text-align: center;
+    }
+    
+    div {
+        max-width: 400px;
+        width: 90%;
+        margin: auto;
+        position: relative;
+    }
+    
+    form {
+        background: #F9F9F9;
+        padding: 25px;
+        margin: 150px 0;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+    
+    h3 {
+        display: block;
+        font-size: 20px;
+        font-weight: 300;
+        margin-bottom: 10px;
+    }
+    
+    fieldset {
+        border: medium none !important;
+        margin: 0 0 10px;
+        min-width: 100%;
+        padding: 0;
+        width: 100%;
+    }
+    
+    input {
+        font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
+        width: 100%;
+        border: 1px solid #ccc;
+        background: #FFF;
+        margin: 0 0 5px;
+        padding: 10px;
+    }
+    
+    button {
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        background: #4CAF50;
+        color: #FFF;
+        margin: 0 0 5px;
+        padding: 10px;
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <div>
+        <form>
+            <h3>WiFi Config</h3>
+            <fieldset> <input id="ssid" placeholder="SSID" type="text" required> </fieldset>
+            <fieldset> <input id="pass" placeholder="Password" type="password" required> </fieldset>
+            <fieldset> <button type="submit" id="send">Save</button> </fieldset>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById("send").addEventListener('click', () => {
+        event.preventDefault();
+        let ssid = document.getElementById('ssid').value;
+        let pass = document.getElementById('pass').value;
+        console.log({
+            ssid: ssid,
+            pass: pass
+        });
+        let xhr = new XMLHttpRequest();
+        let url = '/wificonfig';
+        xhr.onreadystatechange = () => {
+            if (this.onreadyState == 4 & this.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.open('POST', url, true);
+        xhr.send(JSON.stringify({
+            ssid: ssid,
+            pass: pass
+        }));
+    })
+</script>
+
+</html>
