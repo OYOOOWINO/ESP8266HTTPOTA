@@ -145,13 +145,13 @@ void setup()
   server.on("/wificonfig", HTTP_POST, WiFi_CONFIG);
   server.on("/", serveHome);
   server.on("/wificonfig", serveConfig);
-  // server.on("/update", FIRMWARE_UPDATE);
+  server.on("/update", FIRMWARE_UPDATE);
   server.begin();
 
-  if(WiFi.status() == WL_CONNECTED)
-  { 
-      FIRMWARE_UPDATE();
-  }
+  // if(WiFi.status() == WL_CONNECTED)
+  // { 
+  //     FIRMWARE_UPDATE();
+  // }
 }
 
 void loop()
