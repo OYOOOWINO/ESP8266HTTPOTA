@@ -54,7 +54,7 @@ void FIRMWARE_UPDATE()
   }
 }
 
-void serveHome()
+void wifiConnect()
 {
   File file = LittleFS.open("/Home.html", "r");
   if (LittleFS.exists("/Home.html"))
@@ -68,18 +68,11 @@ void serveHome()
   }
 }
 
-void serveConfig()
-{
-  File file = LittleFS.open("/Config.html", "r");
-  server.streamFile(file, "text/html");
-  file.close();
-}
-
 void WiFi_AP_MODE()
 {
   WiFi.softAPdisconnect(true);
   delay(1000);
-  WiFi.softAP(F("TELEOPS CONFIG PORTAL @ 192.168.4.1")); // Uses default AP IP Address of 192.168.4.1
+  WiFi.softAP(F("CONFIG PORTAL @ 192.168.4.1")); // Uses default AP IP Address of 192.168.4.1
 }
 
 void WiFi_CONFIG()
@@ -143,8 +136,8 @@ void setup()
 
   delay(30000);
   server.on("/wificonfig", HTTP_POST, WiFi_CONFIG);
-  server.on("/", serveHome);
-  server.on("/wificonfig", serveConfig);
+  server.on("/", wifiConnect);
+  server.on("/wificonfig", wifiConnect);
   server.on("/update", FIRMWARE_UPDATE);
   server.begin();
 
